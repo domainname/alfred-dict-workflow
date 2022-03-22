@@ -1,10 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import urllib
+import urllib.request
 import json
-from utils import *
-
+from cndict.utils import *
 
 def lookup(word, *args):
     params = {
@@ -15,10 +14,10 @@ def lookup(word, *args):
         'doctype': 'json',
         'q': word
     }
-    url = '{}?{}'.format('http://fanyi.youdao.com/openapi.do', urllib.urlencode(params))
+    url = '{}?{}'.format('http://fanyi.youdao.com/openapi.do', urllib.parse.urlencode(params))
     try:
-        data = urllib.urlopen(url).read()
-        data = convert(json.loads(data))
+        data = urllib.request.urlopen(url).read()
+        data = json.loads(data)
     except:
         raise DictLookupError('error to fetch data.')
     err_code = data.get('errorCode', -1)

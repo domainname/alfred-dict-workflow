@@ -155,7 +155,7 @@
 				<key>escaping</key>
 				<integer>100</integer>
 				<key>script</key>
-				<string>python ./actions.py "{query} &gt; open"</string>
+				<string>python3 ./actions.py "{query} &gt; open"</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -174,7 +174,7 @@
 				<key>escaping</key>
 				<integer>100</integer>
 				<key>script</key>
-				<string>python ./actions.py "{query} @ yd"</string>
+				<string>python3 ./actions.py "{query} @ yd"</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -193,7 +193,7 @@
 				<key>escaping</key>
 				<integer>100</integer>
 				<key>script</key>
-				<string>python ./actions.py "{query} @ cb"</string>
+				<string>python3 ./actions.py "{query} @ cb"</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -276,7 +276,7 @@
 				<key>runningsubtext</key>
 				<string>Please wait ...</string>
 				<key>script</key>
-				<string>python ./query.py "{query}"</string>
+				<string>python3 ./query.py "{query}"</string>
 				<key>subtext</key>
 				<string>Lookup word in multiple dictionaries.</string>
 				<key>title</key>
@@ -301,7 +301,7 @@
 				<key>escaping</key>
 				<integer>100</integer>
 				<key>script</key>
-				<string>python ./actions.py "{query} @ hc"</string>
+				<string>python3 ./actions.py "{query} @ hc"</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -320,7 +320,7 @@
 				<key>escaping</key>
 				<integer>100</integer>
 				<key>script</key>
-				<string>python ./actions.py "{query} @ nj"</string>
+				<string>python3 ./actions.py "{query} @ nj"</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -339,7 +339,7 @@
 				<key>escaping</key>
 				<integer>100</integer>
 				<key>script</key>
-				<string>python ./actions.py "{query} @ by"</string>
+				<string>python3 ./actions.py "{query} @ by"</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>

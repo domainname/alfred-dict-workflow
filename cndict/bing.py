@@ -6,7 +6,7 @@ import urllib2
 import gzip
 import re
 import StringIO
-from utils import *
+from cndict.utils import *
 
 
 def lookup(word, *args):

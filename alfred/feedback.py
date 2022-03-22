@@ -17,7 +17,7 @@ class Item(object):
         self.icon_type = it if it in ['fileicon', 'filetype'] else None
 
         valid = kwargs.get('valid', None)
-        if isinstance(valid, basestring) and valid.lower() == 'no':
+        if isinstance(valid, str) and valid.lower() == 'no':
             valid = 'no'
         elif isinstance(valid, bool) and not valid:
             valid = 'no'
@@ -71,10 +71,10 @@ class Feedback(object):
         ele_tree = ElementTree.Element('items')
         for item in self.items:
             ele_tree.append(item.get_xml_element())
-        res = ElementTree.tostring(ele_tree)
+        res = ElementTree.tostring(ele_tree, encoding='unicode')
         if unescape:
             return saxutils.unescape(res)
         return res
 
     def output(self):
-        print self.get()
+        print(self.get())

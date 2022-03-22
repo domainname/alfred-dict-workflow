@@ -8,7 +8,7 @@ import urllib
 import subprocess
 import platform
 from distutils.version import StrictVersion
-from utils import *
+from cndict.utils import *
 
 _lxml_installed = True
 try:

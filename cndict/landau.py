@@ -5,7 +5,7 @@ import os
 import re
 import urllib
 import subprocess
-from utils import *
+from cndict.utils import *
 
 
 def lookup(word, *args):

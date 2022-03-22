@@ -21,7 +21,8 @@ class Plist(object):
         self.__branches = {}
 
     def read(self, path):
-        self.__plist = plistlib.readPlist(path)
+        with open(path, "rb") as file:
+            self.__plist = plistlib.load(file)
         for obj in self.__plist['objects']:
             if 'keyword' in obj['config']:
                 self.__base = obj
@@ -29,7 +30,7 @@ class Plist(object):
                 for conn in self.__plist['connections'][uid]:
                     self.__branches[conn['destinationuid']] = [conn, None]
                 break
-        for uid, pair in self.__branches.iteritems():
+        for uid, pair in self.__branches.items():
             for obj in self.__plist['objects']:
                 if uid == obj['uid']:
                     pair[1] = obj

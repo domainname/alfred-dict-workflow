@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import os
@@ -12,7 +12,7 @@ from alfred.alfred import Alfred
 from alfred.cache import Cache
 from alfred.feedback import Feedback
 from alfred.plist import Plist
-
+from cndict.utils import DictLookupError
 
 def query(dictionary, word):
     global config, dict_cache
@@ -43,7 +43,7 @@ def query(dictionary, word):
 
     result = cndict.lookup(dictionary, word, **options)
     if result:
-        result = [item.decode('utf-8') for item in result]
+        result = [item for item in result]
         if enable_cache:
             dict_cache.set(cache_name, result, cache_expire)
         return result
@@ -92,7 +92,7 @@ elif argc == 2:
             feedback.add_item(title=cmd, subtitle=desc,
                               arg=':{}'.format(cmd), valid=True)
     else:
-        arg = u'{} @ {}'.format(word.decode('utf-8'), dictionary.decode('utf-8'))
+        arg = u'{} @ {}'.format(word, dictionary)
         try:
             result = query(dictionary, word)
             if result:
@@ -105,10 +105,9 @@ elif argc == 2:
                     feedback.add_item(title=item, arg=u'{} | {}'.format(arg, item), valid=True)
             else:
                 feedback.add_item(title='Dict - Lookup Word',
-                                  subtitle=u'Word "{}" doesn\'t exist in dict "{}".'.format(
-                                           word.decode('utf-8'), dictionary.decode('utf-8')),
+                                  subtitle=u'Word "{}" doesn\'t exist in dict "{}".'.format(word, dictionary),
                                   arg=arg, valid=True)
-        except cndict.DictLookupError, e:
+        except DictLookupError as e:
             feedback.add_item(title=word, subtitle='Error: {}'.format(e), arg=arg, valid=True)
 else:
     sys.exit(1)

@@ -4,7 +4,7 @@
 import urllib
 import json
 import re
-from utils import *
+from cndict.utils import *
 
 
 def lookup(word, *args):
