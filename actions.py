@@ -1,16 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import sys
+import json
 import os
 import re
-import cndict
-import json
+import sys
 
+import cndict
 from alfred.alfred import Alfred
 from alfred.cache import Cache
 from alfred.plist import Plist
-
 
 if len(sys.argv) != 2:
     sys.exit(1)

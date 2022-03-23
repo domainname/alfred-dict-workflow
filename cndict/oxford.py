@@ -1,13 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import os
-import sys
-import re
-import urllib
-import subprocess
 import platform
+import re
+import subprocess
+import sys
+import urllib
 from distutils.version import StrictVersion
+
 from cndict.utils import *
 
 _lxml_installed = True

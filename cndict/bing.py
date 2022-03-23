@@ -1,11 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import urllib
-import urllib2
 import gzip
 import re
+import urllib
+
 import StringIO
+import urllib2
+
 from cndict.utils import *
 
 

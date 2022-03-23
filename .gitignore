@@ -1,2 +1,5 @@
+.idea
+
 .DS_Store
 *.pyc
+/dict.alfredworkflow

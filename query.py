@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import json
 import os
 import re
 import sys
 import time
-import cndict
-import json
 
+import cndict
 from alfred.alfred import Alfred
 from alfred.cache import Cache
 from alfred.feedback import Feedback
 from alfred.plist import Plist
 from cndict.utils import DictLookupError
+
 
 def query(dictionary, word):
     global config, dict_cache
@@ -88,7 +89,7 @@ elif argc == 2:
         feedback.add_item(title='Internal commands',
                           subtitle=u'Press "↩" to execute selected internal command',
                           valid=False)
-        for cmd, desc in internal_cmds.iteritems():
+        for cmd, desc in internal_cmds.items():
             feedback.add_item(title=cmd, subtitle=desc,
                               arg=':{}'.format(cmd), valid=True)
     else:

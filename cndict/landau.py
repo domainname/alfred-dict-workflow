@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import os
 import re
-import urllib
 import subprocess
+import urllib
+
 from cndict.utils import *
 
 

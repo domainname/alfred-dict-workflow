@@ -1,9 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import urllib
 import json
 import re
+import urllib
+
 from cndict.utils import *
 
 
