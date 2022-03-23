@@ -7,6 +7,7 @@ import re
 import subprocess
 import sys
 import urllib
+import urllib.parse
 from distutils.version import StrictVersion
 
 from cndict.utils import *
@@ -128,4 +129,4 @@ def extract(word, item):
 
 
 def get_url(word):
-    return 'dict://' + urllib.quote(word)
+    return 'dict://' + urllib.parse.quote(word)

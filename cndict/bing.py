@@ -4,27 +4,25 @@
 import gzip
 import re
 import urllib
-
-import StringIO
-import urllib2
+import urllib.parse
+import urllib.request
 
 from cndict.utils import *
 
 
 def lookup(word, *args):
     params = {'q': word, 'mkt': 'zh-cn'}
-    url = '{}?{}'.format('http://www.bing.com/dict/search', urllib.urlencode(params))
+    url = '{}?{}'.format('http://www.bing.com/dict/search', urllib.parse.urlencode(params))
     try:
-        request = urllib2.Request(url)
+        request = urllib.request.Request(url)
         request.add_header('Accept-Encoding', 'gzip')
-        response = urllib2.urlopen(request)
+        response = urllib.request.urlopen(request)
         data = response.read()
     except:
         raise DictLookupError('error to fetch data.')
 
     if response.info().get('Content-Encoding') == 'gzip':
-        gzip_file = gzip.GzipFile(fileobj=StringIO.StringIO(data))
-        data = gzip_file.read()
+        data = gzip.decompress(data).decode('utf8')
 
     result = []
     is_eng = is_english(word)
@@ -66,4 +64,4 @@ def extract(word, item):
 
 def get_url(word):
     params = {'q': word}
-    return '{}?{}'.format('http://www.bing.com/dict/search', urllib.urlencode(params))
+    return '{}?{}'.format('http://www.bing.com/dict/search', urllib.parse.urlencode(params))

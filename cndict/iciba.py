@@ -4,6 +4,7 @@
 import json
 import re
 import urllib
+import urllib.parse
 
 from cndict.utils import *
 
@@ -14,7 +15,7 @@ def lookup(word, *args):
         'type': 'json',
         'w': word.lower()
     }
-    url = '{}?{}'.format('http://dict-co.iciba.com/api/dictionary.php', urllib.urlencode(params))
+    url = '{}?{}'.format('http://dict-co.iciba.com/api/dictionary.php', urllib.parse.urlencode(params))
     try:
         data = urllib.urlopen(url).read()
         data = convert(json.loads(data))
@@ -48,4 +49,4 @@ def extract(word, item):
 
 
 def get_url(word):
-    return 'http://www.iciba.com/' + urllib.quote(word)
+    return 'http://www.iciba.com/' + urllib.parse.quote(word)

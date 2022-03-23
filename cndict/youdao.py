@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import urllib.request
 import json
+import urllib.parse
+import urllib.request
+
 from cndict.utils import *
+
 
 def lookup(word, *args):
     params = {
@@ -51,4 +54,4 @@ def extract(word, item):
 
 def get_url(word):
     params = {'q': word}
-    return '{}?{}'.format('http://dict.youdao.com/search', urllib.urlencode(params))
+    return '{}?{}'.format('http://dict.youdao.com/search', urllib.parse.urlencode(params))

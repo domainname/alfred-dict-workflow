@@ -4,9 +4,8 @@
 import gzip
 import re
 import urllib
-
-import StringIO
-import urllib2
+import urllib.parse
+import urllib.request
 
 from cndict.utils import *
 
@@ -14,20 +13,19 @@ from cndict.utils import *
 def lookup(word, wap_page=False, *args):
     if wap_page:
         params = {'q': word}
-        url = '{}?{}'.format('http://3g.dict.cn/s.php', urllib.urlencode(params))
+        url = '{}?{}'.format('http://3g.dict.cn/s.php', urllib.parse.urlencode(params))
     else:
-        url = 'http://dict.cn/{}'.format(urllib.quote(word))
+        url = 'http://dict.cn/{}'.format(urllib.parse.quote(word))
     try:
-        request = urllib2.Request(url)
+        request = urllib.request.Request(url)
         request.add_header('Accept-Encoding', 'gzip')
-        response = urllib2.urlopen(request)
+        response = urllib.request.urlopen(request)
         data = response.read()
     except:
         raise DictLookupError('error to fetch data.')
 
     if response.info().get('Content-Encoding') == 'gzip':
-        gzip_file = gzip.GzipFile(fileobj=StringIO.StringIO(data))
-        data = gzip_file.read()
+        data = gzip.decompress(data).decode('utf8');
 
     result = []
     is_eng = is_english(word)
@@ -91,4 +89,4 @@ def extract(word, item):
 
 
 def get_url(word):
-    return 'http://dict.cn/{}'.format(urllib.quote(word))
+    return 'http://dict.cn/{}'.format(urllib.parse.quote(word))

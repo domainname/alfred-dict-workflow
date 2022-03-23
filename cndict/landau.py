@@ -5,6 +5,7 @@ import os
 import re
 import subprocess
 import urllib
+import urllib.parse
 
 from cndict.utils import *
 
@@ -41,4 +42,4 @@ def extract(word, item):
 
 
 def get_url(word):
-    return 'dict://' + urllib.quote(word)
+    return 'dict://' + urllib.parse.quote(word)
