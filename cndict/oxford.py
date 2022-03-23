@@ -61,61 +61,56 @@ def lookup(word, *args):
     # use ElementTree to parse html
     ns = {'d': 'http://www.apple.com/DTDs/DictionaryService-1.0.rng'}
     phonetic_spans = []
-    for xml in definition.split('<?xml')[1:]:
-        html = etree.fromstring('<?xml' + xml)
-        # entry span
-        entry = html.xpath('.//d:entry', namespaces=ns)
-        if not entry:
-            continue
+    html = etree.fromstring(definition)
+    # entry span
+    entry = html.xpath('.//d:entry', namespaces=ns)
+    if entry:
         entry = entry[0]
-        # word span
-        word_span = entry.xpath("./span[contains(@class,'hwg')]/span[@d:dhw]", namespaces=ns)
-        if not word_span:
-            continue
+    # word span
+    word_span = entry.xpath("./span[contains(@class,'hwg')]/span[@d:dhw]", namespaces=ns)
+    if word_span:
         word_text = word_span[0].text.strip()
-        if word_text.encode('utf-8').lower() == word.lower():
-            # lookup a word, e.g. go
-            root = entry
-            phonetic_span = entry.xpath("./span[contains(@class,'hwg')]/span[@class='prx' and @dialect='AmE']/span[@class='ph']")
-            if phonetic_span:
-                phonetic_spans.extend(phonetic_span)
-        else:
-            # lookup a phrase, e.g. go for
-            if not is_eng:
-                continue
+    if word_text.lower() == word.lower():
+        # lookup a word, e.g. go
+        root = entry
+        phonetic_span = entry.xpath("./span[contains(@class,'hwg')]/span[@class='prx' and @dialect='AmE']/span[@class='ph']")
+        if phonetic_span:
+            phonetic_spans.extend(phonetic_span)
+    else:
+        # lookup a phrase, e.g. go for
+        if is_eng:
             phrase_span = entry.xpath("./span[contains(@class,'pvb')]//span[contains(@class,'pvg')]/span[@class='pv' and normalize-space(.)='{}']/../..".format(word))
-            if not phrase_span:
-                continue
+        if phrase_span:
             root = phrase_span[0]
 
-        for span1 in root.xpath("./span[@lexid]"):
-            # some words may have different phonetic for different part, e.g. record
-            phonetic_span = span1.xpath("./span[1]/span[@class='prx' and @dialect='AmE']/span[@class='ph']")
-            if phonetic_span:
-                phonetic_spans.extend(phonetic_span)
+    for span1 in root.xpath("./span[@lexid]"):
+        # some words may have different phonetic for different part, e.g. record
+        phonetic_span = span1.xpath("./span[1]/span[@class='prx' and @dialect='AmE']/span[@class='ph']")
+        if phonetic_span:
+            phonetic_spans.extend(phonetic_span)
 
-            part_span = span1.xpath("./span[1]/span[@class='ps']")
-            if not part_span:
-                continue
-            part_text = part_span[0].text.strip()
-            part = part_map.get(part_text, part_text + '.')
+        part_span = span1.xpath("./span[1]/span[@class='ps']")
+        if not part_span:
+            continue
+        part_text = part_span[0].text.strip()
+        part = part_map.get(part_text, part_text + '.')
 
-            # for word, find span[@class='trgg x_xd2']; for phrase, find span[@class='x_xdh']
-            # common way is to find parent of span[contains(@class,'trg')]
-            # for ch to eng, the situation is more complicated
-            for span2 in span1.xpath("./span[@lexid]//span[contains(@class,'trg') and not(ancestor::span[contains(@class,'exg')])]/.."):
-                spans = span2.xpath("./span[contains(@class,'trg')]/span[@class='ind' or @class='trans']")
-                item = ' '.join(''.join(s.itertext()).strip() for s in spans)
-                item = re.sub(r' {2,}', ' ', item)
-                item = item.replace(' ;', ';')
-                if item:
-                    item = u'{} {}'.format(part, item).encode('utf-8')
-                    result.append(item)
+        # for word, find span[@class='trgg x_xd2']; for phrase, find span[@class='x_xdh']
+        # common way is to find parent of span[contains(@class,'trg')]
+        # for ch to eng, the situation is more complicated
+        for span2 in span1.xpath("./span[@lexid]//span[contains(@class,'trg') and not(ancestor::span[contains(@class,'exg')])]/.."):
+            spans = span2.xpath("./span[contains(@class,'trg')]/span[@class='ind' or @class='trans']")
+            item = ' '.join(''.join(s.itertext()).strip() for s in spans)
+            item = re.sub(r' {2,}', ' ', item)
+            item = item.replace(' ;', ';')
+            if item:
+                item = u'{} {}'.format(part, item)
+                result.append(item)
 
     phonetics = []
     for phonetic_span in phonetic_spans:
         phonetic = ''.join(phonetic_span.itertext()).strip()
-        phonetic = u'/{}/'.format(phonetic).encode('utf-8')
+        phonetic = u'/{}/'.format(phonetic)
         if phonetic not in phonetics:
             phonetics.append(phonetic)
     phonetics = ', '.join(phonetics)

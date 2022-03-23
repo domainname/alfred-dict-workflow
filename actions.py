@@ -34,7 +34,7 @@ if match:
         dict_cache.clean()
         print('Cache has been cleaned.')
     elif command == 'config':
-        shell_exec('open {}', os.path.abspath('./config.json'))
+        shell_exec('open -e {}', os.path.abspath('./config.json'))
         print('Please edit config file in your editor.')
     elif command == 'update':
         config_data = open(os.path.abspath('./config.json')).read()
