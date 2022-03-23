@@ -5,6 +5,7 @@ import json
 import re
 import urllib
 import urllib.parse
+import urllib.request
 
 from cndict.utils import *
 

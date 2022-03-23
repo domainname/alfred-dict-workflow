@@ -23,6 +23,7 @@ def lookup(word, *args):
         raise DictLookupError('file {} not found or not executable.'.format(cmd))
 
     result = []
+    definition = definition.decode('utf-8')
     definition = definition.split('\n相关词组:\n')[0]
     result = definition.split('\n')
     if is_english(word):
