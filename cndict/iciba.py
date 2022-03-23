@@ -17,8 +17,8 @@ def lookup(word, *args):
     }
     url = '{}?{}'.format('http://dict-co.iciba.com/api/dictionary.php', urllib.parse.urlencode(params))
     try:
-        data = urllib.urlopen(url).read()
-        data = convert(json.loads(data))
+        data = urllib.request.urlopen(url).read()
+        data = json.loads(data)
     except:
         raise DictLookupError('error to fetch data.')
     result = []
