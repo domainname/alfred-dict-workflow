@@ -16,8 +16,8 @@
 
 然后安装 lxml ：
 
-    command -v pip || sudo easy_install pip
-    sudo pip install lxml
+    command -v pip3 || sudo easy_install pip3
+    sudo pip3 install lxml
 
 ## 简介
 
